@@ -1,0 +1,15 @@
+{
+  "name": "breakfast-bot",
+  "version": "1.0.0",
+  "description": "Breakfast Bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dmitriy Shved <dshved@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.30.0"
+  }
+}
