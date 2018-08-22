@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "esNext",
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "strict": true
+  }
+}
