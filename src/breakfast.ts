@@ -1,6 +1,6 @@
-function millisecToTimeStruct(millisec) {
+function millisecToTimeStruct(millisec: number): string {
   if (isNaN(millisec)) {
-    return {};
+    return "";
   }
   const days = millisec / (60 * 60 * 24);
   const hours = (days - ~~days) * 24;
@@ -9,7 +9,7 @@ function millisecToTimeStruct(millisec) {
   return `${~~days} д. ${~~hours} ч. ${~~minutes} м. ${~~seconds} с.`;
 }
 
-function whenBreakfast() {
+export function whenBreakfast(): string {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();
@@ -17,7 +17,7 @@ function whenBreakfast() {
   while (new Date(year, month, today).getDay() !== 4) {
     today++;
   }
-  const breakfast = new Date(year, month, today);
+  const breakfast = +new Date(year, month, today);
   const startDate = 1517432400;
   const oneWeekSeconds = 604800;
   const startBreakfastSeconds = 34200;
@@ -25,29 +25,24 @@ function whenBreakfast() {
   const offset = breakfast / 1000 - startDate;
   const breakfastToday = offset / (2 * oneWeekSeconds);
 
-  if (parseInt(breakfastToday, 10) === breakfastToday) {
+  if (parseInt(breakfastToday.toString(), 10) === breakfastToday) {
     const result =
       Math.floor(breakfast / 1000) +
       startBreakfastSeconds -
-      Math.floor(now / 1000);
+      Math.floor(+now / 1000);
     if (result > 0) {
       return `До завтрака осталось: ${millisecToTimeStruct(result)}`;
     } else if (result < -durationBreakfastSeconds) {
-      let result = Math.floor(breakfast / 1000) - Math.floor(now / 1000);
+      let result = Math.floor(breakfast / 1000) - Math.floor(+now / 1000);
       return `До завтрака осталось: ${millisecToTimeStruct(
         oneWeekSeconds * 2 + result + startBreakfastSeconds,
       )}`;
     }
-
     return "Завтрак уже идет!🍳";
   } else {
-    const result = Math.floor(breakfast / 1000) - Math.floor(now / 1000);
+    const result = Math.floor(breakfast / 1000) - Math.floor(+now / 1000);
     return `До завтрака осталось: ${millisecToTimeStruct(
       oneWeekSeconds + result + startBreakfastSeconds,
     )}`;
   }
 }
-
-module.exports = {
-  whenBreakfast,
-};
