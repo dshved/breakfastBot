@@ -18,11 +18,12 @@ bot.onText(/\/start/, msg => {
 bot.onText(
   /\/breakfast|\/breakfast@SPBFrontendBreakfastBot/,
   (msg, match: any) => {
-    const { chat } = msg;
+    const { chat, message_id } = msg;
     if (match.length) {
       const message = whenBreakfast();
       if (message) {
         bot.sendMessage(chat.id, message);
+        bot.deleteMessage(chat.id, message_id.toString());
       }
     }
   },
