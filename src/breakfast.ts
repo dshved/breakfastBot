@@ -9,7 +9,17 @@ function millisecToTimeStruct(millisec: number): string {
   return `${~~days} д. ${~~hours} ч. ${~~minutes} м. ${~~seconds} с.`;
 }
 
-export function whenBreakfast(): string {
+const getUserInfo = (user: any) => {
+  if (user.username) {
+    return `@${user.username}`;
+  } else if (user.first_name && user.last_name) {
+    return `${user.first_name} ${user.last_name}`;
+  } else {
+    return user.first_name || user.last_name;
+  }
+};
+
+export function whenBreakfast(user: any): string {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();
@@ -26,22 +36,19 @@ export function whenBreakfast(): string {
   const breakfastToday = offset / (2 * oneWeekSeconds);
 
   if (parseInt(breakfastToday.toString(), 10) === breakfastToday) {
-    const result =
-      Math.floor(breakfast / 1000) +
-      startBreakfastSeconds -
-      Math.floor(+now / 1000);
+    const result = Math.floor(breakfast / 1000) + startBreakfastSeconds - Math.floor(+now / 1000);
     if (result > 0) {
-      return `До завтрака осталось: ${millisecToTimeStruct(result)}`;
+      return `${getUserInfo(user)}, до завтрака осталось: ${millisecToTimeStruct(result)}`;
     } else if (result < -durationBreakfastSeconds) {
       let result = Math.floor(breakfast / 1000) - Math.floor(+now / 1000);
-      return `До завтрака осталось: ${millisecToTimeStruct(
+      return `${getUserInfo(user)}, до завтрака осталось: ${millisecToTimeStruct(
         oneWeekSeconds * 2 + result + startBreakfastSeconds,
       )}`;
     }
     return "Завтрак уже идет!🍳";
   } else {
     const result = Math.floor(breakfast / 1000) - Math.floor(+now / 1000);
-    return `До завтрака осталось: ${millisecToTimeStruct(
+    return `${getUserInfo(user)}, до завтрака осталось: ${millisecToTimeStruct(
       oneWeekSeconds + result + startBreakfastSeconds,
     )}`;
   }
