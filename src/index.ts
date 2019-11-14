@@ -5,7 +5,7 @@ import { whenBreakfast } from "./breakfast";
 import { token } from "../config";
 
 const lastMessageData: { timestamp?: number; isNotifySent: boolean } = { timestamp: undefined, isNotifySent: false };
-const TEN_SECONDS = 10_000;
+const ONE_MINUTE = 60_000;
 
 const bot = new TelegramBot(token, {
   polling: true
@@ -22,9 +22,9 @@ bot.onText(/\/breakfast|\/breakfast@SPBFrontendBreakfastBot/, (msg, match: any) 
   const { chat, from } = msg;
 
   if (match.length) {
-    if (typeof lastMessageData.timestamp === "number" && Date.now() - TEN_SECONDS < lastMessageData.timestamp) {
+    if (typeof lastMessageData.timestamp === "number" && Date.now() - ONE_MINUTE < lastMessageData.timestamp) {
       if (!lastMessageData.isNotifySent) {
-        bot.sendMessage(chat.id, "Оставшееся время до завтрака можно запрашивать только раз в 10 секунд");
+        bot.sendMessage(chat.id, "Оставшееся время до завтрака можно запрашивать только раз в минуту");
 
         lastMessageData.isNotifySent = true;
       }
