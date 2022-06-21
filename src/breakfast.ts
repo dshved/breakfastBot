@@ -33,7 +33,7 @@ export function whenBreakfast(user: any): string {
   const startBreakfastSeconds = 34200;
   const durationBreakfastSeconds = 10800;
   const offset = breakfast / 1000 - startDate;
-  const breakfastToday = offset / (2 * oneWeekSeconds);
+  const breakfastToday = offset / oneWeekSeconds;
 
   if (parseInt(breakfastToday.toString(), 10) === breakfastToday) {
     const result = Math.floor(breakfast / 1000) + startBreakfastSeconds - Math.floor(+now / 1000);
